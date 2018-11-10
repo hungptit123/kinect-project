@@ -165,7 +165,9 @@ void GetCloudFromDevice(pcl::PointCloud<pcl::PointXYZRGB>::Ptr &cloud){
         cloud->points[i].x = (i%cloud->width - (cloud->width-1)/2.f) * depth[i] / f;
         cloud->points[i].y = (i/cloud->width - (cloud->height-1)/2.f) * depth[i] / f;
         cloud->points[i].z = depth[i];
+        if(depth[i]!=0) std::cout << depth[i] << " ";
     }
+    std::cout << std::endl;
 }
 
 void ProcessRANSAC(pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud, pcl::PointCloud<pcl::PointXYZRGB>::Ptr &final){
@@ -319,62 +321,70 @@ void printInfo()
     std::cout << "Quit         :   Q or Esc\n"        << std::endl;
 }
 
-//cv::Mat1s frame_rgb;
-
-//void getRGBFromOpencv(cv::Mat1s frame_rgb_depth) {
-//    for (int i=0; i<frame_rgb_depth.cols; i++) {
-//        for (int j=0;)
-//    }
-//}
-
 int main(int argc, char** argv)  {
-//    device = &freenect.createDevice<MyFreenectDevice>("output.avi");
+//    device = &freenect.createDevice<MyFreenectDevice>(0);
 //    device->startVideo();
 //    device->startDepth();
+//
+//    device->getRGB()
+
+
     cv::VideoCapture cap;
     cap = cv::VideoCapture("output.avi");
-    cv::Mat1s image;
-    image = cv::imread("DEMPTH_IMAGE.jpg", cv::COLOR_RGB2GRAY);
+//    cv::Mat image;
+//    image = cv::imread("DEMPTH_IMAGE.jpg", cv::COLOR_RGB2GRAY);
     while(cap.isOpened()) {
-        cv::Mat frame_rgb_depth;
+        cv::Mat3f frame_rgb_depth(480,640*2,CV_32FC3);
         cap >> frame_rgb_depth;
         cv::Rect roi;
         roi.width = frame_rgb_depth.size().width/2;
         roi.height = frame_rgb_depth.size().height;
 
-        cv::Mat rgb = frame_rgb_depth(roi);
+        cv::Mat3f rgb = frame_rgb_depth(roi);
         cv::imshow("frame_rgb", rgb);
 
         roi.x = 640;
         roi.y = 0;
-        cv::Mat depth(rgb.size(), CV_32FC1);
+
+        cv::Mat3f depth(480, 640, CV_32FC3);
         depth = frame_rgb_depth(roi);
+        cv::Mat3f normals(depth.rows, depth.cols, CV_32FC3);
+
 //        cv::cvtColor(depth, depth, cv::COLOR_RGB2GRAY);
-//        depth.convertTo(depth, CV_32FC1);
-//        cv::imshow("depth", depth/255);
-        cv::Mat normals(depth.size(), CV_32FC3);
-        for(int x = 0; x < depth.rows; ++x) {
-            for (int y = 0; y < depth.cols; ++y) {
+//        depth.convertTo(depth, CV_32FC3);
+//        cv::imwrite("depth.jpg", depth);
+        cv::imshow("depth", depth);
+//        std::cout << depth.at<cv::Vec3f>(0,0) << " ";
+//        cv::Mat3f normals(de);
+//        depth.copyTo(normals);
+        for(int x = 0; x < depth.rows; x++) {
+            for (int y = 0; y < depth.cols; y++) {
                 float dzdx = 0.0, dzdy = 0.0;
                 if(x == 0 || x == depth.rows-1){
-                    dzdx = (depth.at<float>(x, y) - depth.at<float>(x, y)) / 2.0 * 255.0;
+                    dzdx = (depth.at<float>(x, y) + depth.at<float>(x, y)) / 2.0;
                 } else {
-                    dzdx = (depth.at<float>(x + 1, y) - depth.at<float>(x - 1, y)) / 2.0 * 255.0;
+                    dzdx = (depth.at<float>(x + 1, y) + depth.at<float>(x - 1, y)) / 2.0;
                 }
-                if(y == 0 || y == depth.cols-1){
-                    dzdy = (depth.at<float>(x, y) - depth.at<float>(x, y)) / 2.0 * 255.0;
+                if(y == 0 || y == depth.rows-1){
+                    dzdy = (depth.at<float>(x, y) + depth.at<float>(x, y)) / 2.0 ;
                 } else {
-                    dzdy = (depth.at<float>(x, y + 1) - depth.at<float>(x, y - 1)) / 2.0 * 255.0;
+                    dzdy = (depth.at<float>(x, y + 1) + depth.at<float>(x, y - 1)) / 2.0;
                 }
-
                 cv::Vec3f d(-dzdx, -dzdy, 1.0f);
                 cv::Vec3f n = normalize(d);
-
                 normals.at<cv::Vec3f>(x, y) = n;
+
+//                if(x!=0 and y!=0 and x!=depth.rows-1 and y != depth.cols-1) {
+//                    normals.at<cv::Vec3b>(x, y) = (depth.at<cv::Vec3b>(x-1, y)+depth.at<cv::Vec3b>(x+1, y))/2;
+//                } else normals.at<cv::Vec3b>(x, y) = depth.at<cv::Vec3b>(x, y);
             }
         }
-        cv::imshow("depth", depth);
+////        normals.convertTo(normals, CV_32FC3);
+//        cv::resize(normals, normals, cv::Size(), 640.0/480.0, 1.0);
         cv::imshow("normal", normals);
+//        cv::imwrite("normal.jpg", normals);
+//        cv::imshow("depth", depth);
+
 
         //        cv::cvtColor(frame_rgb_depth, frame_rgb, cv::COLOR_RGB2GRAY);
 //        int a = frame_rgb.at<cv::Vec3b>(0,0)[1];
@@ -410,7 +420,7 @@ int main(int argc, char** argv)  {
 //    printInfo();
 //
 //    glutMainLoop();
-//
+
     return 0;
 }
 

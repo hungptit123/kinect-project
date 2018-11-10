@@ -123,32 +123,59 @@ Demo/fast:
 	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/build
 .PHONY : Demo/fast
 
-main.o: main.cpp.o
+Main2.o: Main2.cpp.o
 
-.PHONY : main.o
+.PHONY : Main2.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cpp.o
-.PHONY : main.cpp.o
+Main2.cpp.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main2.cpp.o
+.PHONY : Main2.cpp.o
 
-main.i: main.cpp.i
+Main2.i: Main2.cpp.i
 
-.PHONY : main.i
+.PHONY : Main2.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cpp.i
-.PHONY : main.cpp.i
+Main2.cpp.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main2.cpp.i
+.PHONY : Main2.cpp.i
 
-main.s: main.cpp.s
+Main2.s: Main2.cpp.s
 
-.PHONY : main.s
+.PHONY : Main2.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/main.cpp.s
-.PHONY : main.cpp.s
+Main2.cpp.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main2.cpp.s
+.PHONY : Main2.cpp.s
+
+Main3.o: Main3.cpp.o
+
+.PHONY : Main3.o
+
+# target to build an object file
+Main3.cpp.o:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main3.cpp.o
+.PHONY : Main3.cpp.o
+
+Main3.i: Main3.cpp.i
+
+.PHONY : Main3.i
+
+# target to preprocess a source file
+Main3.cpp.i:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main3.cpp.i
+.PHONY : Main3.cpp.i
+
+Main3.s: Main3.cpp.s
+
+.PHONY : Main3.s
+
+# target to generate assembly for a file
+Main3.cpp.s:
+	$(MAKE) -f CMakeFiles/Demo.dir/build.make CMakeFiles/Demo.dir/Main3.cpp.s
+.PHONY : Main3.cpp.s
 
 # Help Target
 help:
@@ -159,9 +186,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Demo"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... Main2.o"
+	@echo "... Main2.i"
+	@echo "... Main2.s"
+	@echo "... Main3.o"
+	@echo "... Main3.i"
+	@echo "... Main3.s"
 .PHONY : help
 
 

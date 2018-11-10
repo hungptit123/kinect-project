@@ -168,10 +168,13 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/hunglv/CLionProjects/Demo/libfreenect.hpp">
+		<Unit filename="/home/hunglv/CLionProjects/Demo/Main2.cpp">
 			<Option target="Demo"/>
 		</Unit>
-		<Unit filename="/home/hunglv/CLionProjects/Demo/main.cpp">
+		<Unit filename="/home/hunglv/CLionProjects/Demo/Main3.cpp">
+			<Option target="Demo"/>
+		</Unit>
+		<Unit filename="/home/hunglv/CLionProjects/Demo/libfreenect.hpp">
 			<Option target="Demo"/>
 		</Unit>
 		<Unit filename="/home/hunglv/CLionProjects/Demo/CMakeLists.txt">

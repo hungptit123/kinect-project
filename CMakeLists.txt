@@ -12,7 +12,7 @@ include_directories(${FREENECT_INCLUDE_DIRS})
 
 #set(OpenCV_FOUND 1)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules)
-set(SOURCE_FILES main.cpp libfreenect.hpp)
+set(SOURCE_FILES Main2.cpp libfreenect.hpp Main3.cpp)
 
 add_executable(Demo ${SOURCE_FILES})
 
@@ -32,3 +32,8 @@ find_package (OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR}  ${GLUT_INCLUDE_DIRS})
 target_link_libraries(Demo ${OPENGL_LIBRARIES} ${GLUT_LIBRARY} ${CMAKE_THREAD_LIBS_INIT} ${PCL_LIBRARIES} ${FREENECT_LIBRARIES})
+
+#add_executable(Demo
+#    libfreenect.hpp
+##    main.cpp
+#    Main2.cpp)
